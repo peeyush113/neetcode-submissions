@@ -1,0 +1,22 @@
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        n, m = len(word1), len(word2)
+        cache = {}
+        def dfs(i, j):
+            if (i, j) in cache:
+                return cache[(i, j)]
+
+            if i==n:
+                return m-j
+            
+            if j == m:
+                return n-i
+                        
+            if word1[i] == word2[j]:
+                cache[(i, j)] = dfs(i+1, j+1)
+            else:
+                cache[(i, j)] = min(1+dfs(i+1, j), 1+dfs(i+1, j+1), 1+dfs(i, j+1))
+            return cache[(i, j)]
+        
+        return dfs(0, 0)
+            
